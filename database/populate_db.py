@@ -1,4 +1,4 @@
-# from assignment.database.pinecone_setup import Memory
+# from pinecone_setup import Memory
 
 # mem = Memory()
 

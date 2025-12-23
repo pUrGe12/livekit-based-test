@@ -3,7 +3,8 @@ from livekit.agents import function_tool, RunContext, get_job_context
 
 from database.pinecone_setup import Memory
 
-m = Memory()
+m = Memory()		# WE HAVE TO LOAD THIS ONLY ONCE, OTHERWISE COOKED ONLY
+
 
 @function_tool
 async def end_call(ctx: RunContext) -> str:
