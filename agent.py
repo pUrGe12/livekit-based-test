@@ -5,6 +5,8 @@ from livekit.agents import AgentServer,AgentSession, Agent, room_io
 from livekit.plugins import noise_cancellation, silero
 from livekit.plugins.turn_detector.multilingual import MultilingualModel
 
+from tool import end_call, retrieve_transfer_status_data
+
 load_dotenv(".env.local")
 
 
@@ -15,12 +17,13 @@ class Assistant(Agent):
             You eagerly assist users with their questions by providing information from your extensive knowledge.
             Your responses are concise, to the point, and without any complex formatting or punctuation including emojis, asterisks, or other symbols.
             You are curious, friendly, and have a sense of humor.""",
+            tools=[end_call, retrieve_transfer_status_data]
         )
 
-server = AgentServer()
+# server = AgentServer()
 
-@server.rtc_session(agent_name="livekit-agent")   # Giving this a name for telephony purposes according to doc
-async def my_agent(ctx: agents.JobContext):
+# @server.rtc_session(agent_name="livekit-agent-3")   # Giving this a name for telephony purposes according to doc
+async def entrypoint(ctx: agents.JobContext):
     session = AgentSession(
         stt="assemblyai/universal-streaming:en",        # Will fix all of this later, or let this be. It's fast enough and handle interruptions!
         llm="openai/gpt-4.1-mini",
@@ -46,4 +49,4 @@ async def my_agent(ctx: agents.JobContext):
 
 
 if __name__ == "__main__":
-    agents.cli.run_app(server)
+    agents.cli.run_app(agents.WorkerOptions(entrypoint_fnc=entrypoint, agent_name="livekit-agent-3"))

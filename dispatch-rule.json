@@ -8,10 +8,8 @@
         },
         "roomConfig": {
             "agents": [{
-                "agentName": "livekit-agent"
+                "agentName": "livekit-agent-3"
             }]
         }
     }
 }
-
-// SDR_2a9Ev3CQWctr dispatch rule ID in case needed later
