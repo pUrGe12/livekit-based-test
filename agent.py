@@ -19,10 +19,10 @@ class Assistant(Agent):
 
 server = AgentServer()
 
-@server.rtc_session()
+@server.rtc_session(agent_name="livekit-agent")   # Giving this a name for telephony purposes according to doc
 async def my_agent(ctx: agents.JobContext):
     session = AgentSession(
-        stt="assemblyai/universal-streaming:en",
+        stt="assemblyai/universal-streaming:en",        # Will fix all of this later, or let this be. It's fast enough and handle interruptions!
         llm="openai/gpt-4.1-mini",
         tts="cartesia/sonic-3:9626c31c-bec5-4cca-baa8-f8ba9e84c8bc",
         vad=silero.VAD.load(),
@@ -42,6 +42,7 @@ async def my_agent(ctx: agents.JobContext):
     await session.generate_reply(
         instructions="Greet the user and offer your assistance."
     )
+
 
 
 if __name__ == "__main__":
